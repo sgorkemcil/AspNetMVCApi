@@ -45,6 +45,41 @@ namespace AspNetMVCApi_PL.Controllers
 
         // GET api/<controller>/5
 
+        //öğrenci ekleme
+        [HttpPost]
+        [System.Web.Http.Route("")]
+        public ResponseData AddStudent([FromBody]StudentVM model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return new ResponseData()
+                    {
+                        IsSuccess = false,
+                        Message = "Veri girişleri düzgün olmalıdır!"
+                    };
+
+                }
+                model.RegisterDate = DateTime.Now;
+               ResponseData result= _studentService.AddStudet(model);
+                return new ResponseData()
+                {
+                    IsSuccess = true,
+                    Message = "Yeni öğrenci kaydı yapılmıştır."
+                };
+            }
+            catch (Exception ex)
+            {
+                 // ex loglanabilir
+                return new ResponseData()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
         // POST api/<controller>
 
         // PUT api/<controller>/5
