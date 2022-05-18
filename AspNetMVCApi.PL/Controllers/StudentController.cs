@@ -43,12 +43,13 @@ namespace AspNetMVCApi_PL.Controllers
         }
 
 
-        // GET api/<controller>/5
+        // POST s-->prefix var böyle çağrılır.
+        //POST api/student/GetAllStudents
 
         //öğrenci ekleme
         [HttpPost]
         [System.Web.Http.Route("")]
-        public ResponseData AddStudent([FromBody]StudentVM model)
+        public ResponseData AddStudent([FromBody] StudentVM model)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace AspNetMVCApi_PL.Controllers
 
                 }
                 model.RegisterDate = DateTime.Now;
-               ResponseData result= _studentService.AddStudet(model);
+                ResponseData result = _studentService.AddStudet(model);
                 return new ResponseData()
                 {
                     IsSuccess = true,
@@ -71,7 +72,7 @@ namespace AspNetMVCApi_PL.Controllers
             }
             catch (Exception ex)
             {
-                 // ex loglanabilir
+                // ex loglanabilir
                 return new ResponseData()
                 {
                     IsSuccess = false,
@@ -80,10 +81,103 @@ namespace AspNetMVCApi_PL.Controllers
             }
 
         }
-        // POST api/<controller>
 
-        // PUT api/<controller>/5
+        //öğrenci güncelleme
+        //HTTPPut ya da HTTPPost kullanılır.
+        [HttpPut]
+        [System.Web.Http.Route("")]
+        public ResponseData UpdateStudent(int studentId, string name, string surname)
+        {
+            try
+            {
+                if (studentId > 0)
+                {
+                    ResponseData result = _studentService.UpdateStudent(studentId, name, surname);
+                    if (result.IsSuccess)
+                    {
+                        return new ResponseData()
+                        {
+                            IsSuccess = true,
+                            Message = "Öğrenci başarılı bir şekilde güncellendi. !"
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseData()
+                        {
+                            IsSuccess = false,
+                            Message = "HATA:Öğrenci güncelleme işleminde beklenmedik bir sorun oluştu !"
+                        };
+                    }
 
-        // DELETE api/<controller>/5
+                }
+                else
+                {
+                    return new ResponseData()
+                    {
+                        IsSuccess = false,
+                        Message = "Öğrenci Bulunamadı!"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+
+                // ex loglanabilir
+                return new ResponseData()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
+        [HttpDelete]
+        public ResponseData DeleteStudent(int id)
+        {
+            try
+            {
+                if (id>0)
+                {
+                    var result = _studentService.DeleteStudent(id);
+                    if (result.IsSuccess)
+                    {
+                        return new ResponseData()
+                        {
+                            IsSuccess = false,
+                            Message = "Öğrenci sistemden silinmiştir."
+                        };
+
+                    }
+                    else
+                    {
+                        return new ResponseData()
+                        {
+                            IsSuccess = false,
+                            Message = "HATA:Öğrenci silme işlemi başarız oldu!"
+                        };
+
+                    }
+
+                }
+                else
+                {
+                    
+                    return new ResponseData()
+                    {
+                        IsSuccess = false,
+                        Message = "HATA:id bilgisini girişi düzgün olmalıdır!"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                // ex loglanabilir
+                return new ResponseData()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
