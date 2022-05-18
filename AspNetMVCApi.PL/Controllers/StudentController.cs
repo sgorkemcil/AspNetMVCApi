@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace AspNetMVCApi_PL.Controllers
 {
+    [System.Web.Http.RoutePrefix("s")]
     public class StudentController : ApiController
     {
         private readonly IStudentService _studentService;
@@ -20,7 +21,9 @@ namespace AspNetMVCApi_PL.Controllers
         }
 
 
-        // GET api/<controller>
+        // GET s --> prefix var böyle çağrılır
+        //Get api/student/GetAllStudents
+        [System.Web.Http.Route("")]
         public ResponseData GetAllStudents()
         {
             try

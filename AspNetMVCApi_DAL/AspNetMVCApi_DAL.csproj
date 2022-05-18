@@ -60,6 +60,11 @@
     <Compile Include="Implemantations\RepositoryBase.cs" />
     <Compile Include="Implemantations\StudentRepo.cs" />
     <Compile Include="Implemantations\UnitOfWork.cs" />
+    <Compile Include="Migrations\202205180634425_migratio111.cs" />
+    <Compile Include="Migrations\202205180634425_migratio111.Designer.cs">
+      <DependentUpon>202205180634425_migratio111.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,6 +78,10 @@
       <Name>AspNetMVCApi_EL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202205180634425_migratio111.resx">
+      <DependentUpon>202205180634425_migratio111.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
